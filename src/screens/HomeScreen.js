@@ -27,6 +27,9 @@ const HomeScreen = (props) => {
         <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Text")}}>
             <Text style={styles.buttonText}>TextScreen</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Box")}}>
+            <Text style={styles.buttonText}>BoxScreen</Text>
+        </TouchableOpacity>
     </View>
 };
 
