@@ -10,6 +10,8 @@ import SquareScreen from "./src/screens/SquareScreen";
 import SquareScreen2 from "./src/screens/SquareScreens2";
 import TextScreen from "./src/screens/TextScreen";
 import BoxScreen from "./src/screens/BoxScreen";
+import MobileCombat from "./src/screens/MobileCombat";
+import AttributeScreen from "./src/screens/AttributeScreen";
 
 const navigator = createStackNavigator(
   {
@@ -23,6 +25,9 @@ const navigator = createStackNavigator(
     Square2: SquareScreen2,
     Text : TextScreen,
     Box : BoxScreen,
+    Game : MobileCombat,
+    Attribute: AttributeScreen,
+
   },
   {
     initialRouteName: "Home",
