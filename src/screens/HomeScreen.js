@@ -31,8 +31,17 @@ const HomeScreen = (props) => {
             <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Box")}}>
                 <Text style={styles.buttonText}>BoxScreen</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Game")}}>
+            <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Hw2")}}>
                 <Text style={styles.buttonText}>Mobile Combat</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Review")}}>
+                <Text style={styles.buttonText}>ReviewScreen</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Review2")}}>
+                <Text style={styles.buttonText}>ReviewScreen2</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Review3")}}>
+                <Text style={styles.buttonText}>ReviewScreen3</Text>
             </TouchableOpacity>
         </View>
     </ScrollView>

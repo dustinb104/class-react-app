@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     },
     buttonHolder:{
         alignItems: "center",
-        justifyContent:"center"
+        justifyContent:"center",
     },
     buttonText:{
         fontSize: 25

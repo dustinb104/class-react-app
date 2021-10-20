@@ -12,6 +12,10 @@ import TextScreen from "./src/screens/TextScreen";
 import BoxScreen from "./src/screens/BoxScreen";
 import MobileCombat from "./src/screens/MobileCombat";
 import AttributeScreen from "./src/screens/AttributeScreen";
+import HW2 from "./src/screens/HW2";
+import ReviewScreen from './src/screens/ReviewScreen';
+import ReviewScreen2 from './src/screens/ReviewScreen2';
+import ReviewScreen3 from './src/screens/ReviewScreen3';
 
 const navigator = createStackNavigator(
   {
@@ -27,6 +31,10 @@ const navigator = createStackNavigator(
     Box : BoxScreen,
     Game : MobileCombat,
     Attribute: AttributeScreen,
+    Hw2: HW2,
+    Review: ReviewScreen,
+    Review2: ReviewScreen2,
+    Review3: ReviewScreen3,
 
   },
   {
