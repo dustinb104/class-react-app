@@ -6,6 +6,7 @@ const ReviewScreen = () => {
         <Text>Hello Review 1 World!</Text>
         <View style={styles.colorBox}></View>
         <Button title='I am a button'/>
+        <TouchableOpacity><Text>Hello World</Text></TouchableOpacity>
     </View>
 }
 

@@ -9,7 +9,7 @@ const MobileCombat = (props) => {
             <Image style={styles.imageSize} source={require('../../assets/swordAndShield.jpg')}/>
         </View>
         <Text style={styles.headerText}>Welcome to a GAME!</Text>
-        <TouchableOpacity style = {styles.startButton} onPress = {function(){props.navigation.navigate("Attribute")}}><Text style={styles.textStyle}>Begin Your Adventure</Text></TouchableOpacity>
+        <TouchableOpacity style = {styles.startButton} onPress = {function(){props.navigation.navigate("HW2")}}><Text style={styles.textStyle}>Begin Your Adventure</Text></TouchableOpacity>
 
     </View>
 }

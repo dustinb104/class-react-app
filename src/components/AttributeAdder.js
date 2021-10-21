@@ -26,10 +26,11 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 3,
         alignSelf: 'center',
-        margin: 5,
+        margin: 10,
         alignItems: 'center',
         width: 300,
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        height: 75
     },
     textStyle:{
         paddingLeft: 4,

@@ -4,6 +4,9 @@ import {StyleSheet, View, Text, TouchableOpacity, Image, FlatList} from 'react-n
 import AttributeAdder from '../components/AttributeAdder';
 const STAT_SCREEN_STATE = "characterCreation";
 const COMBAT_SCREEN_STATE = "fighting";
+const WON_GAME = "win";
+const GAME_START = "start";
+const LOSE_GAME = "lose";
 
 
 // const skillPoints = 18; //skill points to spend
@@ -23,11 +26,11 @@ const reducer = (state, action) => {
         case "health":
             return state.skillPoints - action.amount < 0 || state.healthPoints + action.amount < 10 ? state : {...state, healthPoints: state.healthPoints + action.amount, skillPoints: state.skillPoints - action.amount};
         case 'attack':
-            return {...state, enemyHealthPoints: state.enemyHealthPoints - state.strengthPoints};
+            return state.healthPoints > 0 && state.enemyHealthPoints > 0 ? {...state, enemyHealthPoints: state.enemyHealthPoints - state.strengthPoints, fightText: "You attacked the monster, but he countered your attack!", healthPoints: state.healthPoints - state.enemyStrengthPoints} : state;
         case 'fire':
-            return {...state, enemyHealthPoints: state.enemyHealthPoints - state.magicPoints};
+            return state.magicPoints - 1 >= 0  && state.healthPoints > 0 && state.enemyHealthPoints > 0 ? {...state, enemyHealthPoints: state.enemyHealthPoints - state.magicPoints, healthPoints: state.healthPoints - state.enemyMagicPoints, magicPoints: state.magicPoints - 1, enemyMagicPoints: state.enemyMagicPoints - 1, fightText: "You attacked the monster with fire, but he countered your attack with a spell!"} : state;
         case 'heal':
-            return {...state, healthPoints: state.healthPoints + 2};
+            return  state.magicPoints - 1 >= 0 ? {...state, healthPoints: state.healthPoints + 2, magicPoints: state.magicPoints - 1, fightText: "You healed your wounds with some magic!"} : state;
         default: 
             return state;
 }}
@@ -35,13 +38,22 @@ const reducer = (state, action) => {
 
 const HW2 = () => {
     // keep track of what game state we are in, register that useing the 'useState' hook.
-    const [gameState, setGameState] = useState(STAT_SCREEN_STATE);
+    const [gameState, setGameState] = useState(GAME_START);
 
-    const [state, dispatch] = useReducer(reducer, {strengthPoints: 1, magicPoints: 1, healthPoints: 10, skillPoints: 18, enemyHealthPoints: 75, enemyMagicPoints: 21, enemyStrengthPoints: 18});
+    const [state, dispatch] = useReducer(reducer, {strengthPoints: 1, magicPoints: 1, healthPoints: 10, skillPoints: 10, enemyHealthPoints: 16, enemyMagicPoints: 4, enemyStrengthPoints: 4, fightText: 'Fight'});
 
     var whatToDisplay //will fill this up with different JSX
 
     switch(gameState){
+        case GAME_START:
+            whatToDisplay = <View>
+                <View>
+            <Image style={styles.imageSize} source={require('../../assets/swordAndShield.jpg')}/>
+        </View>
+        <Text style={styles.headerText}>Welcome to Mobile Combat!</Text>
+        <TouchableOpacity style = {styles.startButton} onPress = {() => setGameState(STAT_SCREEN_STATE)}><Text style={styles.textStyle}>Begin Your Adventure</Text></TouchableOpacity>
+            </View>
+            break;
         case STAT_SCREEN_STATE: state.skillPoints > 0
             whatToDisplay = <View>
                 <Text style={styles.attributeHeaderScreen}>Create Your Character!</Text>
@@ -57,9 +69,9 @@ const HW2 = () => {
                 currentPoints = {state.magicPoints}
                 onIncrease = {() => {dispatch({pointType: "magic", amount: INCREMENT})}}
                 onDecrease = {() => {dispatch({pointType: "magic", amount: -1 * INCREMENT})}}/>
-                <Text>Remaining Skill Points:{state.skillPoints}</Text>
-                {state.skillPoints < 1 ? <TouchableOpacity onPress = {() => setGameState(COMBAT_SCREEN_STATE)}>
-                <Text>Continue</Text>
+                <Text style={styles.remainingPoints}>Remaining Skill Points:{state.skillPoints}</Text>
+                {state.skillPoints < 1 ? <TouchableOpacity style={styles.joinFightButton} onPress = {() => setGameState(COMBAT_SCREEN_STATE)}>
+                <Text style={styles.joinFightButtonText}>Join The Fight</Text>
                 </TouchableOpacity> : null}
             </View>
             break;
@@ -74,9 +86,9 @@ const HW2 = () => {
                     </View>
                     <View style={styles.statBox}>
                         <Text>Enemy Stats:</Text>
-                        <Text>Health Points : {state.enemyHealthPoints}</Text>
-                        <Text>Strength Points: {state.enemyStrengthPoints}</Text>
-                        <Text>Magic Points: {state.enemyMagicPoints}</Text>
+                        <Text>Health Points : {state.enemyHealthPoints * 5}</Text>
+                        <Text>Strength Points: {state.enemyStrengthPoints * 2}</Text>
+                        <Text>Magic Points: {state.enemyMagicPoints * 3}</Text>
                     </View>
                     </View>
                     <View style = {styles.enemyImageContainer}>{state.healthPoints > 0 && state.enemyHealthPoints > 0 ? <Image style={styles.enemyImage} source ={require('../../assets/alienWizard.png')}></Image> : <Image style={styles.enemyImage} source = {require('../../assets/monsterDead.png')}></Image>}</View>
@@ -95,6 +107,21 @@ const HW2 = () => {
                             <Image source={require('../../assets/healIcon.png')}></Image>
                         </TouchableOpacity>
                     </View>
+                    <View style={styles.fightConsole}>
+                        {state.healthPoints >+ 1 ? <Text>{state.fightText}</Text> : <Text>You are dead</Text>}
+                        {state.enemyHealthPoints <= 0 ? setGameState(WON_GAME) : null}
+                        {state.healthPoints <= 0 ? setGameState(LOSE_GAME): null}
+                    </View>
+                </View>
+            break;
+            case WON_GAME:
+                whatToDisplay = <View style = {styles.winView}>
+                    <Text style = {styles.winText}>You win!</Text>
+                </View>
+            break;
+            case LOSE_GAME:
+                whatToDisplay = <View style ={styles.winView}>
+                    <Text style = {styles.winText}>YOU LOSE!</Text>
                 </View>
             break;
     }
@@ -105,9 +132,13 @@ const styles = StyleSheet.create({
     attributeHeaderScreen:{
         fontSize: 25
     },
+    remainingPoints: {
+        fontSize: 20,
+        left: 5
+    },
     container:{
         flexDirection: 'column',
-    //     alignItems: 'flex-end',
+        alignItems: 'center',
     //     alignSelf: 'flex-end'
     },
     statsContainer: {
@@ -128,7 +159,8 @@ const styles = StyleSheet.create({
     },
     enemyImage:{
         height: 300,
-        width: 250
+        width: 250,
+        marginTop: 10
     },
     buttonContainer:{
         flexDirection: 'row',
@@ -138,8 +170,49 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
-
-
+        alignSelf: 'stretch'
+    },
+    fightConsole:{
+        backgroundColor: '#e9ecef',
+        height: 200,
+        width: 300,
+        borderWidth: 2,
+        marginTop: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    winText:{
+        fontSize: 30
+    },
+    winView:{
+        alignItems: 'center',
+    },
+    imageSize: {
+        height: 350,
+        width: '100%'
+    },
+    headerText: {
+        position: 'absolute',
+        fontSize: 30,
+        top: 140,
+        left: 35,
+        color: '#e5383b'
+    },
+    startButton: {
+        backgroundColor: '#a8dadc',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    textStyle: {
+        fontSize: 20
+    },
+    joinFightButton:{
+        alignItems: 'center',
+        backgroundColor: '#70d6ff',
+        marginTop: 10
+    },
+    joinFightButtonText: {
+        fontSize: 30
     }
 })
 
