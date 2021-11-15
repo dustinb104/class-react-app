@@ -1,20 +1,17 @@
 import React, {useState} from 'react';
 import {Text, View, Button, StyleSheet} from 'react-native';
+import { State } from 'react-native-gesture-handler';
 
 const ReviewScreen3 = () => {
 
-    const [count, setCount] = useState(0);
-
-    const changeCount = () =>{
-        setCount(count + 1);
-    }
+    const [redMargin, setCount] = useState(0);
 
     return <View>
         <Text>Hello Review 2 World</Text>
-        <View style={styles.redBox}></View>
+        <View style={{...styles.redBox, margin: redMargin}}></View>
         <View style={styles.greenBox}></View>
         <View style={styles.blueBox}></View>
-        <Button title='I am a button' onPress={changeCount()}/>
+        <Button title='I am a button' onPress={()=>{setCount(redMargin + 5)}}/>
     </View> 
 }
 

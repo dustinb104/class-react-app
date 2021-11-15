@@ -16,6 +16,7 @@ import HW2 from "./src/screens/HW2";
 import ReviewScreen from './src/screens/ReviewScreen';
 import ReviewScreen2 from './src/screens/ReviewScreen2';
 import ReviewScreen3 from './src/screens/ReviewScreen3';
+import Midterm from "./src/screens/Midterm";
 
 const navigator = createStackNavigator(
   {
@@ -35,6 +36,7 @@ const navigator = createStackNavigator(
     Review: ReviewScreen,
     Review2: ReviewScreen2,
     Review3: ReviewScreen3,
+    Mid: Midterm,
 
   },
   {

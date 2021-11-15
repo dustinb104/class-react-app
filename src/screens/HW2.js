@@ -20,7 +20,6 @@ const reducer = (state, action) => {
     switch (action.pointType){
         case "strength":
             return state.skillPoints - action.amount < 0 || state.strengthPoints + action.amount < 1 ? state : {...state, strengthPoints: state.strengthPoints + action.amount, skillPoints: state.skillPoints - action.amount};
-            ;
         case "magic":
             return state.skillPoints - action.amount < 0 || state.magicPoints + action.amount < 1 ? state : {...state, magicPoints: state.magicPoints + action.amount, skillPoints: state.skillPoints - action.amount};
         case "health":

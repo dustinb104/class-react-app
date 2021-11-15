@@ -43,6 +43,9 @@ const HomeScreen = (props) => {
             <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Review3")}}>
                 <Text style={styles.buttonText}>ReviewScreen3</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress = {function(){props.navigation.navigate("Mid")}}>
+                <Text style={styles.buttonText}>Midterm</Text>
+            </TouchableOpacity>
         </View>
     </ScrollView>
 };
