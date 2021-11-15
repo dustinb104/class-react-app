@@ -11,7 +11,7 @@ const BoxScreen = () => {
 
 const styles = StyleSheet.create({
     viewStyle: {
-        borderWidth: 3,
+        borderWidth: 4,
         borderColor: 'black',
         height: 200,
         flexDirection: 'row',
